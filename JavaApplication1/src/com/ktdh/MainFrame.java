@@ -83,6 +83,14 @@ public class MainFrame extends javax.swing.JFrame {
             .addGap(0, 832, Short.MAX_VALUE)
         );
 
+        jTextField1.setText("20");
+
+        jTextField2.setText("11");
+
+        jTextField3.setText("-33");
+
+        jTextField4.setText("-7");
+
         jButton2.setText("Vẽ đường thẳng");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -148,7 +156,17 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel1.setText("VẼ ĐƯỜNG THẲNG ĐẶC BIỆT");
 
+        jTextField7.setText("30");
+
         jLabel2.setText("Chiều dài : ");
+
+        jTextField8.setText("5");
+
+        jTextField9.setText("6");
+
+        jTextField10.setText("40");
+
+        jTextField11.setText("30");
 
         jLabel8.setText("y:");
 
@@ -325,7 +343,7 @@ public class MainFrame extends javax.swing.JFrame {
             p.drawLine(new com.ktdh.SLine(Integer.parseInt(jTextField1.getText()), Integer.parseInt(jTextField2.getText()),
                     Integer.parseInt(jTextField3.getText()), Integer.parseInt(jTextField4.getText())));
         } catch (java.lang.NumberFormatException e) {
-            p.drawLine(new com.ktdh.SLine(0, 0, 5, 5));
+            p.drawLine(new com.ktdh.SLine(-30, -20, 40, 20));
         }
     }//GEN-LAST:event_jButton2MouseClicked
 

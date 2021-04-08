@@ -105,7 +105,7 @@ public class Surface extends JPanel {
     private SCircle dCircle;
 
     public SPoint Opoint; //Tọa độ gốc Oxy mới
-    public static int dpi = 7; // 7 pixel tương đương với 5 pixel khi vẽ
+    public static int dpi = 5; // 7 pixel tương đương với 5 pixel khi vẽ
     private int DELAY = 10; // không cần quan tâm
     private Timer timer; //không cần quan tâm
 
