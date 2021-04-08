@@ -51,10 +51,19 @@ class SLine {
 class SRectangle {
 
     public SPoint p;
-    int w,h;
+    int w, h;
 
     public SRectangle(SPoint st, int w, int h) {
+        p = new SPoint();
         this.p = st;
+        this.w = w;
+        this.h = h;
+    }
+    
+    public SRectangle(int x, int y, int w, int h) {
+        p = new SPoint();
+        this.p.x = x;
+        this.p.y = y;
         this.w = w;
         this.h = h;
     }
@@ -176,7 +185,7 @@ public class Surface extends JPanel {
         short dx = (short) ((Dx < 0) ? -1 : 1);
         short dy = (short) ((Dy < 0) ? -1 : 1);
 
-        drawPixel(g,new SPoint(x, y));
+        drawPixel(g, new SPoint(x, y));
 
         Dx = (short) Math.abs(Dx);
         Dy = (short) Math.abs(Dy);
@@ -192,7 +201,7 @@ public class Surface extends JPanel {
                     y += dy;
                 }
                 x += dx;
-                drawPixel(g,new SPoint(x, y));
+                drawPixel(g, new SPoint(x, y));
             }
         } else {
             short p = (short) ((Dx << 1) - Dy);
@@ -205,7 +214,7 @@ public class Surface extends JPanel {
                     x += dx;
                 }
                 y += dy;
-                drawPixel(g,new SPoint(x, y));
+                drawPixel(g, new SPoint(x, y));
             }
         }
     }
@@ -217,38 +226,277 @@ public class Surface extends JPanel {
     }
     //không cần quan tâm
 
-    private void drawLine1(Graphics g, SLine l) {
-        
+    private void drawlineStyle1(Graphics g, SLine l) {
+        short Dx = (short) (l.end.x - l.st.x);
+        short Dy = (short) (l.end.y - l.st.y);
+        short x = (short) l.st.x, y = (short) l.st.y;
+
+        short dx = (short) ((Dx < 0) ? -1 : 1);
+        short dy = (short) ((Dy < 0) ? -1 : 1);
+
+        drawPixel(g, new SPoint(x, y));
+
+        Dx = (short) Math.abs(Dx);
+        Dy = (short) Math.abs(Dy);
+        int n = 0;
+        if (Dx > Dy) {
+            short p = (short) ((Dy << 1) - Dx);
+            short Const1 = (short) (Dy << 1), Const2 = (short) ((Dy - Dx) << 1);
+            while (x != l.end.x) {
+
+                if (p < 0) {
+                    p += Const1;
+                } else {
+                    p += Const2;
+                    y += dy;
+                }
+                x += dx;
+                if (n % 5 != 4) {
+                    drawPixel(g, new SPoint(x, y));
+                }
+                n++;
+            }
+        } else {
+            short p = (short) ((Dx << 1) - Dy);
+            short Const1 = (short) (Dx << 1), Const2 = (short) ((Dx - Dy) << 1);
+            while (y != l.end.y) {
+
+                if (p < 0) {
+                    p += Const1;
+                } else {
+                    p += Const2;
+                    x += dx;
+                }
+                y += dy;
+                if (n % 5 != 4) {
+                    drawPixel(g, new SPoint(x, y));
+
+                }
+                n++;
+            }
+        }
     }
 
+    public void drawlineStyle1(SPoint po, int lenght) {
+        mode = Mode.Line1;
+        dLine = new SLine(po.x, po.y, po.x + lenght, po.y);
+        repaint();
+    }
+
+    private void drawlineStyle2(Graphics g, SLine l) {
+        short Dx = (short) (l.end.x - l.st.x);
+        short Dy = (short) (l.end.y - l.st.y);
+        short x = (short) l.st.x, y = (short) l.st.y;
+
+        short dx = (short) ((Dx < 0) ? -1 : 1);
+        short dy = (short) ((Dy < 0) ? -1 : 1);
+
+        drawPixel(g, new SPoint(x, y));
+
+        Dx = (short) Math.abs(Dx);
+        Dy = (short) Math.abs(Dy);
+        int n = 0;
+        if (Dx > Dy) {
+            short p = (short) ((Dy << 1) - Dx);
+            short Const1 = (short) (Dy << 1), Const2 = (short) ((Dy - Dx) << 1);
+            while (x != l.end.x) {
+
+                if (p < 0) {
+                    p += Const1;
+                } else {
+                    p += Const2;
+                    y += dy;
+                }
+                x += dx;
+                if (n % 8 != 5 && n % 8 != 7) {
+                    drawPixel(g, new SPoint(x, y));
+                }
+                n++;
+            }
+        } else {
+            short p = (short) ((Dx << 1) - Dy);
+            short Const1 = (short) (Dx << 1), Const2 = (short) ((Dx - Dy) << 1);
+            while (y != l.end.y) {
+
+                if (p < 0) {
+                    p += Const1;
+                } else {
+                    p += Const2;
+                    x += dx;
+                }
+                y += dy;
+                if (n % 8 != 5 && n % 8 != 7) {
+                    drawPixel(g, new SPoint(x, y));
+                }
+                n++;
+            }
+        }
+        System.out.println("com.ktdh.Surface.drawlineStyle2()");
+        System.out.println(mode.toString());
+    }
+
+    public void drawlineStyle2(SPoint po, int lenght) {
+        mode = Mode.Line2;
+        dLine = new SLine(po.x, po.y, po.x + lenght, po.y);
+        repaint();
+    }
+
+    private void drawlineStyle3(Graphics g, SLine l) {
+        short Dx = (short) (l.end.x - l.st.x);
+        short Dy = (short) (l.end.y - l.st.y);
+        short x = (short) l.st.x, y = (short) l.st.y;
+
+        short dx = (short) ((Dx < 0) ? -1 : 1);
+        short dy = (short) ((Dy < 0) ? -1 : 1);
+
+        drawPixel(g, new SPoint(x, y));
+
+        Dx = (short) Math.abs(Dx);
+        Dy = (short) Math.abs(Dy);
+        int n = 0;
+        if (Dx > Dy) {
+            short p = (short) ((Dy << 1) - Dx);
+            short Const1 = (short) (Dy << 1), Const2 = (short) ((Dy - Dx) << 1);
+            while (x != l.end.x) {
+
+                if (p < 0) {
+                    p += Const1;
+                } else {
+                    p += Const2;
+                    y += dy;
+                }
+                x += dx;
+                if (n % 9 != 4 && n % 9 != 6 && n % 9 != 8) {
+                    System.out.println(n);
+                    drawPixel(g, new SPoint(x, y));
+                }
+                n++;
+            }
+        } else {
+            short p = (short) ((Dx << 1) - Dy);
+            short Const1 = (short) (Dx << 1), Const2 = (short) ((Dx - Dy) << 1);
+            while (y != l.end.y) {
+
+                if (p < 0) {
+                    p += Const1;
+                } else {
+                    p += Const2;
+                    x += dx;
+                }
+                y += dy;
+                if (n % 9 != 4 && n % 9 != 6 && n % 9 != 8) {
+                    System.out.println(n);
+                    drawPixel(g, new SPoint(x, y));
+                }
+                n++;
+            }
+        }
+        System.out.println("com.ktdh.Surface.drawlineStyle3()");
+    }
+
+    public void drawlineStyle3(SPoint po, int lenght) {
+        mode = Mode.Line3;
+        dLine = new SLine(po.x, po.y, po.x + lenght, po.y);
+        repaint();
+    }
+
+    private void drawlineStyle4(Graphics g, SLine l) {
+        short Dx = (short) (l.end.x - l.st.x);
+        short Dy = (short) (l.end.y - l.st.y);
+        short x = (short) l.st.x, y = (short) l.st.y;
+
+        short dx = (short) ((Dx < 0) ? -1 : 1);
+        short dy = (short) ((Dy < 0) ? -1 : 1);
+
+        drawPixel(g, new SPoint(x, y));
+
+        Dx = (short) Math.abs(Dx);
+        Dy = (short) Math.abs(Dy);
+        int n = 0;
+        if (Dx > Dy) {
+            short p = (short) ((Dy << 1) - Dx);
+            short Const1 = (short) (Dy << 1), Const2 = (short) ((Dy - Dx) << 1);
+            while (x != l.end.x) {
+
+                if (p < 0) {
+                    p += Const1;
+                } else {
+                    p += Const2;
+                    y += dy;
+                }
+                x += dx;
+                drawPixel(g, new SPoint(x, y));
+                n++;
+            }
+        } else {
+            short p = (short) ((Dx << 1) - Dy);
+            short Const1 = (short) (Dx << 1), Const2 = (short) ((Dx - Dy) << 1);
+            while (y != l.end.y) {
+
+                if (p < 0) {
+                    p += Const1;
+                } else {
+                    p += Const2;
+                    x += dx;
+                }
+                y += dy;
+                drawPixel(g, new SPoint(x, y));
+                n++;
+            }
+        }
+        drawPixel(g, new SPoint(x-dx, y+dy));
+        drawPixel(g, new SPoint(x-dx, y-dy));
+    }
+
+    public void drawlineStyle4(SPoint po, int lenght) {
+        mode = Mode.Line4;
+        dLine = new SLine(po.x, po.y, po.x + lenght, po.y);
+        repaint();
+    }
+
+    private void drawRectangle(Graphics g, SRectangle r){
+        for (int i = 0; i < r.h; i++) {
+            drawLine(g, new SLine(r.p.x, r.p.y+i, r.p.x+r.w, r.p.y+i));
+        }
+    }
+    
+    public void drawRectangle(SRectangle r){
+        mode = Mode.Rectangle;
+        dRectangle = r;
+        repaint();
+    }
+    
     //Xác định chế độ vẽ
     //Xác định hình cần vẽ
     //Tiến hành vẽ
     private void draw(Graphics g) {
         switch (mode) {
-            case Circle: {//chưa xong
+            case Circle -> {//chưa xong
                 drawPixel(g, dPoint);
-                break;
             }
-            case Line: { //chưa xong
+            case Line -> { //chưa xong
                 drawLine(g, dLine);
-                break;
             }
-            case Point: {
+            case Point -> {
                 drawPixel(g, dPoint);
-                break;
             }
-            case Rectangle: {//chưa xong
-                drawPixel(g, dPoint);
-                break;
+            case Rectangle -> {//chưa xong
+                drawRectangle(g, dRectangle);
             }
-            case Configure: {
+            case Configure -> {
                 drawGrid(g);
-                break;
             }
-            case Line1: {
-                drawGrid(g);
-                break;
+            case Line1 -> {
+                drawlineStyle1(g, dLine);
+            }
+            case Line2 -> {
+                drawlineStyle2(g, dLine);
+            }
+            case Line3 -> {
+                drawlineStyle3(g, dLine);
+            }
+            case Line4 -> {
+                drawlineStyle4(g, dLine);
             }
         }
 
