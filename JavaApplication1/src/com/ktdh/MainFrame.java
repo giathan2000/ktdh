@@ -96,6 +96,11 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel5.setText("Nhập điểm đầu : ");
 
         jButton7.setText("Vẽ điểm");
+        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton7MouseClicked(evt);
+            }
+        });
 
         jButton8.setText("Vẽ hình chữ nhật");
 
@@ -212,11 +217,20 @@ public class MainFrame extends javax.swing.JFrame {
         Surface p = (Surface) Paneldraw;
         try {
             p.drawLine(new com.ktdh.SLine(Integer.parseInt(jTextField1.getText()), Integer.parseInt(jTextField2.getText()),
-                                           Integer.parseInt(jTextField3.getText()),Integer.parseInt(jTextField4.getText())));
+                    Integer.parseInt(jTextField3.getText()), Integer.parseInt(jTextField4.getText())));
         } catch (java.lang.NumberFormatException e) {
-            p.drawLine(new com.ktdh.SLine(0,0,5,5));
+            p.drawLine(new com.ktdh.SLine(0, 0, 5, 5));
         }
     }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseClicked
+        Surface p = (Surface) Paneldraw;
+        try {
+            p.drawPixel(new com.ktdh.SPoint(Integer.parseInt(jTextField1.getText()), Integer.parseInt(jTextField2.getText())));
+        } catch (java.lang.NumberFormatException e) {
+            p.drawPixel(new com.ktdh.SPoint(0, 0));
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7MouseClicked
 
     /**
      * @param args the command line arguments
@@ -279,13 +293,13 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void initStart() {
         Paneldraw.setBackground(Color.white);
-        this.setSize(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height-50);
+        this.setSize(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height - 50);
         Paneldraw.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                
+
             }
-            
+
         });
         addWindowListener(new WindowAdapter() {
             @Override

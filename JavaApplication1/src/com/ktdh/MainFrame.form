@@ -228,6 +228,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="V&#x1ebd; &#x111;i&#x1ec3;m"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton7MouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton8">
       <Properties>
