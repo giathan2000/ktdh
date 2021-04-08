@@ -331,8 +331,6 @@ public class Surface extends JPanel {
                 n++;
             }
         }
-        System.out.println("com.ktdh.Surface.drawlineStyle2()");
-        System.out.println(mode.toString());
     }
 
     public void drawlineStyle2(SPoint po, int lenght) {
@@ -367,7 +365,6 @@ public class Surface extends JPanel {
                 }
                 x += dx;
                 if (n % 9 != 4 && n % 9 != 6 && n % 9 != 8) {
-                    System.out.println(n);
                     drawPixel(g, new SPoint(x, y));
                 }
                 n++;
@@ -385,13 +382,11 @@ public class Surface extends JPanel {
                 }
                 y += dy;
                 if (n % 9 != 4 && n % 9 != 6 && n % 9 != 8) {
-                    System.out.println(n);
                     drawPixel(g, new SPoint(x, y));
                 }
                 n++;
             }
         }
-        System.out.println("com.ktdh.Surface.drawlineStyle3()");
     }
 
     public void drawlineStyle3(SPoint po, int lenght) {
