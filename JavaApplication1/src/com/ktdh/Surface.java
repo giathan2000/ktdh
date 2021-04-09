@@ -277,9 +277,9 @@ public class Surface extends JPanel {
         }
     }
 
-    public void drawlineStyle1(SPoint po, int lenght) {
+     public void drawlineStyle1(SLine l) {
         mode = Mode.Line1;
-        dLine = new SLine(po.x, po.y, po.x + lenght, po.y);
+        dLine = l;
         repaint();
     }
 
@@ -333,9 +333,9 @@ public class Surface extends JPanel {
         }
     }
 
-    public void drawlineStyle2(SPoint po, int lenght) {
+     public void drawlineStyle2(SLine l) {
         mode = Mode.Line2;
-        dLine = new SLine(po.x, po.y, po.x + lenght, po.y);
+        dLine = l;
         repaint();
     }
 
@@ -389,9 +389,9 @@ public class Surface extends JPanel {
         }
     }
 
-    public void drawlineStyle3(SPoint po, int lenght) {
+    public void drawlineStyle3(SLine l) {
         mode = Mode.Line3;
-        dLine = new SLine(po.x, po.y, po.x + lenght, po.y);
+        dLine = l;
         repaint();
     }
 
@@ -439,13 +439,15 @@ public class Surface extends JPanel {
                 n++;
             }
         }
-        drawPixel(g, new SPoint(x-dx, y+dy));
-        drawPixel(g, new SPoint(x-dx, y-dy));
+        drawPixel(g, new SPoint(x, y+dy));
+        drawPixel(g, new SPoint(x, y-dy));
+        drawPixel(g, new SPoint(x-dx, y));
+        drawPixel(g, new SPoint(x+dx, y));
     }
 
-    public void drawlineStyle4(SPoint po, int lenght) {
+    public void drawlineStyle4(SLine l) {
         mode = Mode.Line4;
-        dLine = new SLine(po.x, po.y, po.x + lenght, po.y);
+        dLine = l;
         repaint();
     }
 
