@@ -59,7 +59,7 @@ class SRectangle {
         this.w = w;
         this.h = h;
     }
-    
+
     public SRectangle(int x, int y, int w, int h) {
         p = new SPoint();
         this.p.x = x;
@@ -71,12 +71,19 @@ class SRectangle {
 
 class SCircle {
 
-    public SPoint c;
+    public SPoint o;
     int R;
 
-    public SCircle(int R, SPoint c) {
+    public SCircle(int R, SPoint o) {
         this.R = R;
-        this.c = c;
+        this.o = o;
+    }
+
+    SCircle(int x, int y, int R) {
+       o = new SPoint();
+       this.o.x = x;
+       this.o.y = y;
+       this.R = R;
     }
 }
 
@@ -444,8 +451,8 @@ public class Surface extends JPanel {
                 n++;
             }
         }
-        drawPixel(g, new SPoint(x-dx, y+dy));
-        drawPixel(g, new SPoint(x-dx, y-dy));
+        drawPixel(g, new SPoint(x - dx, y + dy));
+        drawPixel(g, new SPoint(x - dx, y - dy));
     }
 
     public void drawlineStyle4(SPoint po, int lenght) {
@@ -454,25 +461,59 @@ public class Surface extends JPanel {
         repaint();
     }
 
-    private void drawRectangle(Graphics g, SRectangle r){
+    private void drawRectangle(Graphics g, SRectangle r) {
         for (int i = 0; i < r.h; i++) {
-            drawLine(g, new SLine(r.p.x, r.p.y+i, r.p.x+r.w, r.p.y+i));
+            drawLine(g, new SLine(r.p.x, r.p.y + i, r.p.x + r.w, r.p.y + i));
         }
     }
-    
-    public void drawRectangle(SRectangle r){
+
+    public void drawRectangle(SRectangle r) {
         mode = Mode.Rectangle;
         dRectangle = r;
         repaint();
     }
+
+    public void EightWaySymmetricPlot(Graphics g, int xc, int yc, int x, int y) {
+        drawPixel(g, new SPoint(x + xc, y + yc));
+        drawPixel(g, new SPoint(x + xc, -y + yc));
+        drawPixel(g, new SPoint(-x + xc, -y + yc));
+        drawPixel(g, new SPoint(-x + xc, y + yc));
+        drawPixel(g, new SPoint(y + xc, x + yc));
+        drawPixel(g, new SPoint(y + xc, -x + yc));
+        drawPixel(g, new SPoint(-y + xc, -x + yc));
+        drawPixel(g, new SPoint(-y + xc, x + yc));
+    }
+
+    private void drawCircle(Graphics g, SCircle c) {
+        {
+            int x = 0, y = c.R, d = 3 - (2 * c.R);
+            EightWaySymmetricPlot(g, c.o.x, c.o.y, x, y);
+            while (x <= y) {
+                if (d <= 0) {
+                    d = d + (4 * x) + 6;
+                } else {
+                    d = d + (4 * x) - (4 * y) + 10;
+                    y = y - 1;
+                }
+                x = x + 1;
+                EightWaySymmetricPlot(g, c.o.x, c.o.y, x, y);
+            }
+        }
+    }
     
+    public void drawCircle(SCircle c){
+        mode = Mode.Circle;
+        dCircle = c;
+        repaint();
+    }
     //Xác định chế độ vẽ
     //Xác định hình cần vẽ
     //Tiến hành vẽ
+
     private void draw(Graphics g) {
         switch (mode) {
             case Circle -> {//chưa xong
-                drawPixel(g, dPoint);
+                drawCircle(g, dCircle);
             }
             case Line -> { //chưa xong
                 drawLine(g, dLine);
@@ -510,6 +551,7 @@ public class Surface extends JPanel {
         Opoint = getCenter();
         super.paintComponent(g);
         drawGrid(g);
+        //drawCircle(g, new SPoint(4,4), 10);
         draw(g);
     }
 
