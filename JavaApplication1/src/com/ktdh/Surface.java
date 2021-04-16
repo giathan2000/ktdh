@@ -80,10 +80,10 @@ class SCircle {
     }
 
     SCircle(int x, int y, int R) {
-       o = new SPoint();
-       this.o.x = x;
-       this.o.y = y;
-       this.R = R;
+        o = new SPoint();
+        this.o.x = x;
+        this.o.y = y;
+        this.R = R;
     }
 }
 
@@ -487,7 +487,8 @@ public class Surface extends JPanel {
     private void drawCircle(Graphics g, SCircle c) {
         {
             int x = 0, y = c.R, d = 3 - (2 * c.R);
-            EightWaySymmetricPlot(g, c.o.x, c.o.y, x, y);
+            //EightWaySymmetricPlot(g, c.o.x, c.o.y, x, y);
+            int n = 0;
             while (x <= y) {
                 if (d <= 0) {
                     d = d + (4 * x) + 6;
@@ -496,12 +497,15 @@ public class Surface extends JPanel {
                     y = y - 1;
                 }
                 x = x + 1;
-                EightWaySymmetricPlot(g, c.o.x, c.o.y, x, y);
+                if (n % 5 != 3 && n % 5 != 43) {
+                    EightWaySymmetricPlot(g, c.o.x, c.o.y, x, y);
+                }
+                n++;
             }
         }
     }
-    
-    public void drawCircle(SCircle c){
+
+    public void drawCircle(SCircle c) {
         mode = Mode.Circle;
         dCircle = c;
         repaint();
@@ -551,7 +555,6 @@ public class Surface extends JPanel {
         Opoint = getCenter();
         super.paintComponent(g);
         drawGrid(g);
-        //drawCircle(g, new SPoint(4,4), 10);
         draw(g);
     }
 
