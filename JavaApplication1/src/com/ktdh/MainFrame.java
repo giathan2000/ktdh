@@ -11,6 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
 
 /**
  *
@@ -22,8 +23,10 @@ public class MainFrame extends javax.swing.JFrame {
      * Creates new form MainFrame
      */
     public MainFrame() {
+        
         initComponents();
         initStart();
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     /**
@@ -409,45 +412,45 @@ public class MainFrame extends javax.swing.JFrame {
     private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseClicked
         Surface p = (Surface) Paneldraw;
         try {
-            p.drawPixel(new com.ktdh.SPoint(Integer.parseInt(jTextField1.getText()), Integer.parseInt(jTextField2.getText())));
+            p.drawPixel(new com.ktdh.SPoint2D(Integer.parseInt(jTextField1.getText()), Integer.parseInt(jTextField2.getText())));
         } catch (java.lang.NumberFormatException e) {
-            p.drawPixel(new com.ktdh.SPoint(0, 0));
+            p.drawPixel(new com.ktdh.SPoint2D(0, 0));
         }        // TODO add your handling code here:
     }//GEN-LAST:event_jButton7MouseClicked
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         Surface p = (Surface) Paneldraw;
         try {
-            p.drawlineStyle1(new com.ktdh.SPoint(Integer.parseInt(jTextField5.getText()), Integer.parseInt(jTextField6.getText())), Integer.parseInt(jTextField7.getText()));
+            p.drawlineStyle1(new com.ktdh.SPoint2D(Integer.parseInt(jTextField5.getText()), Integer.parseInt(jTextField6.getText())), Integer.parseInt(jTextField7.getText()));
         } catch (java.lang.NumberFormatException e) {
-            p.drawlineStyle1(new com.ktdh.SPoint(5, 5), 20);
+            p.drawlineStyle1(new com.ktdh.SPoint2D(5, 5), 20);
         }
     }//GEN-LAST:event_jButton3MouseClicked
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
         Surface p = (Surface) Paneldraw;
         try {
-            p.drawlineStyle2(new com.ktdh.SPoint(Integer.parseInt(jTextField5.getText()), Integer.parseInt(jTextField6.getText())), Integer.parseInt(jTextField7.getText()));
+            p.drawlineStyle2(new com.ktdh.SPoint2D(Integer.parseInt(jTextField5.getText()), Integer.parseInt(jTextField6.getText())), Integer.parseInt(jTextField7.getText()));
         } catch (java.lang.NumberFormatException e) {
-            p.drawlineStyle2(new com.ktdh.SPoint(5, 5), 20);
+            p.drawlineStyle2(new com.ktdh.SPoint2D(5, 5), 20);
         }
     }//GEN-LAST:event_jButton4MouseClicked
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
         Surface p = (Surface) Paneldraw;
         try {
-            p.drawlineStyle3(new com.ktdh.SPoint(Integer.parseInt(jTextField5.getText()), Integer.parseInt(jTextField6.getText())), Integer.parseInt(jTextField7.getText()));
+            p.drawlineStyle3(new com.ktdh.SPoint2D(Integer.parseInt(jTextField5.getText()), Integer.parseInt(jTextField6.getText())), Integer.parseInt(jTextField7.getText()));
         } catch (java.lang.NumberFormatException e) {
-            p.drawlineStyle3(new com.ktdh.SPoint(5, 5), 20);
+            p.drawlineStyle3(new com.ktdh.SPoint2D(5, 5), 20);
         }
     }//GEN-LAST:event_jButton5MouseClicked
 
     private void jButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseClicked
         Surface p = (Surface) Paneldraw;
         try {
-            p.drawlineStyle4(new com.ktdh.SPoint(Integer.parseInt(jTextField5.getText()), Integer.parseInt(jTextField6.getText())), Integer.parseInt(jTextField7.getText()));
+            p.drawlineStyle4(new com.ktdh.SPoint2D(Integer.parseInt(jTextField5.getText()), Integer.parseInt(jTextField6.getText())), Integer.parseInt(jTextField7.getText()));
         } catch (java.lang.NumberFormatException e) {
-            p.drawlineStyle4(new com.ktdh.SPoint(5, 5), 20);
+            p.drawlineStyle4(new com.ktdh.SPoint2D(5, 5), 20);
         }
     }//GEN-LAST:event_jButton6MouseClicked
 
