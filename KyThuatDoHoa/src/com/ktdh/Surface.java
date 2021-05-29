@@ -183,7 +183,7 @@ public class Surface extends JPanel implements ActionListener {
     private SCircle dCircle;
 
     public SPoint2D Opoint; //Tọa độ gốc Oxy mới
-    public static int dpi = 7; // 7 pixel tương đương với 5 pixel khi vẽ
+    public static int dpi = 6; // 7 pixel tương đương với 5 pixel khi vẽ
     private int DELAY = 200; // không cần quan tâm
     private Timer timer; //không cần quan tâm
 
@@ -259,33 +259,37 @@ public class Surface extends JPanel implements ActionListener {
         return new SPoint2D(p.x + Opoint.x, (-p.y + Opoint.y));
     }
 
-    public SPoint2D trans3DPointTo2DPoint(SPoint3D p3d) {
-        return new SPoint2D((int) (p3d.y - 0.707106 * p3d.x), (int) (p3d.z - 0.707106 * p3d.x));
+     public SPoint2D trans3DPointTo2DPoint(SPoint3D p3d) {
+        return new SPoint2D((int) (p3d.x - 0.707106 * p3d.y), (int) (p3d.z - 0.707106 * p3d.y));
     }
 
     //Vẽ lưới pixel
+    boolean cor = false;
+
     private void drawGrid2D(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         int w = getWidth();
         int h = getHeight();
 
         for (int i = 0; i < h + 1; i++) {
-//            if (i == Opoint.y || i == Opoint.y + 1) {
-//                g2d.setColor(Color.blue);
-//            } else {
-//                g2d.setColor(new Color(240, 240, 240));
-//            }
             g2d.setColor(new Color(240, 240, 240));
+            if ((i == Opoint.y || i == Opoint.y + 1) && cor) {
+                g2d.setColor(Color.blue);
+            } else {
+                g2d.setColor(new Color(240, 240, 240));
+            }
+
             g2d.draw(new Line2D.Double(0, i * Surface.dpi, w * Surface.dpi, i * Surface.dpi));
         }
 
         for (int i = 0; i < w + 1; i++) {
-//            if (i == Opoint.x || i == Opoint.x + 1) {
-//                g2d.setColor(Color.blue);
-//            } else {
-//                g2d.setColor(new Color(240, 240, 240));
-//            }
             g2d.setColor(new Color(240, 240, 240));
+            if ((i == Opoint.x || i == Opoint.x + 1) && cor) {
+                g2d.setColor(Color.blue);
+            } else {
+                g2d.setColor(new Color(240, 240, 240));
+            }
+
             g2d.draw(new Line2D.Double(i * Surface.dpi, 0, i * Surface.dpi, h * Surface.dpi));
         }
     }
@@ -326,6 +330,7 @@ public class Surface extends JPanel implements ActionListener {
         repaint();
     }
 
+    //Mid-Point Line Generation Algorithm
     private void drawLine(Graphics g, SLine l) {
         short Dx = (short) (l.end.x - l.st.x);
         short Dy = (short) (l.end.y - l.st.y);
@@ -666,6 +671,7 @@ public class Surface extends JPanel implements ActionListener {
         drawPixel(g, new SPoint2D(-y + xc, x + yc));
     }
 
+    //Bresenham’s circle drawing algorithm
     private void drawCircle(Graphics g, SCircle c) {
         int x = 0, y = c.R, d = 3 - (2 * c.R);
         //EightWaySymmetricPlot(g, c.o.x, c.o.y, x, y);
@@ -812,6 +818,7 @@ public class Surface extends JPanel implements ActionListener {
         }
     }
 
+    //Midpoint ellipse drawing algorithm
     public void drawEllipse(Graphics g, SEllipse e) {
         int rx = (int) e.Rx, ry = (int) e.Ry, xc = e.c.x, yc = e.c.y;
         int dx, dy, d1, d2, x, y;
@@ -1140,7 +1147,7 @@ public class Surface extends JPanel implements ActionListener {
         drawFullCircle(g, sun, Color.red);
     }
 
-    int distance = 80; // khoảng các đến khi biến mấy
+    int distance = 70; // khoảng các đến khi biến mấy
     int speed = 3; // vận tóc rơi
     SPoint2D pos = sp1; // vị trí thả rơi
     int time = 0; //thoi gian giưa cac lan roi
@@ -1180,20 +1187,20 @@ public class Surface extends JPanel implements ActionListener {
                 // did = true;
             } else {
 
-                float minac = 3;
+                float minac = 10;
                 if ((pos.y - e.c.y) <= distance - 3) {
                     if (e.Rx > minac * minRx) {
                         drawEllipse(g, new SEllipse(e.c, minac * minRx, minac * minRy), Color.GRAY);
-                        drawLine(g, new SLine(e.c.x, e.c.y - (int) (minac * minRy) / 2, e.c.x, e.c.y + (int) (minac * minRy) / 2), Color.RED);
-                        drawLine(g, new SLine(e.c.x - (int) (minac * minRx) / 2, e.c.y, e.c.x + (int) (minac * minRx) / 2, e.c.y), Color.RED);
+                        drawLine(g, new SLine(e.c.x+ (int) (minac * minRx) / 2, e.c.y - (int) ((minac * minRy) / 2), e.c.x- (int) (minac * minRx) / 2, e.c.y + (int) ((minac * minRy) / 2)), Color.RED);
+                        drawLine(g, new SLine(e.c.x - (int) (minac * minRx) / 2, e.c.y- (int) ((minac * minRy) / 2), e.c.x + (int) (minac * minRx) / 2, e.c.y+ (int) ((minac * minRy) / 2)), Color.RED);
                     } else {
                         drawEllipse(g, e, Color.GRAY);
-                        drawLine(g, new SLine(e.c.x, e.c.y - (int) e.Ry / 2, e.c.x, e.c.y + (int) e.Ry / 2), Color.RED);
-                        drawLine(g, new SLine(e.c.x - (int) e.Rx / 2, e.c.y, e.c.x + (int) e.Rx / 2, e.c.y), Color.RED);
+                        drawLine(g, new SLine(e.c.x+ (int) (e.Rx / 2), e.c.y - (int) (e.Ry / 2), e.c.x- (int) (e.Rx / 2), e.c.y + (int) (e.Ry / 2)), Color.RED);
+                        drawLine(g, new SLine(e.c.x - (int) (e.Rx / 2), e.c.y- (int) (e.Ry / 2), e.c.x + (int) (e.Rx / 2), e.c.y+ (int) (e.Ry / 2)), Color.RED);
                     }
                 }
 
-                float zoom = 1.075f;
+                float zoom = 1.1f;
                 e.Rx *= zoom;
                 e.Ry *= zoom;
 
